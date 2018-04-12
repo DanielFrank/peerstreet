@@ -8,8 +8,6 @@ class ZipCbsaMapTest(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        file_location = '/tmp/pickle.json'
-        
         cls.zip_map = ZipCbsaMap.get_map()
         cls.fileContents = """ZIP,CBSA,RES_RATIO,BUS_RATIO,OTH_RATIO,TOT_RATIO
 00501,35004,0.000000000,1.000000000,0.000000000,1.000000000

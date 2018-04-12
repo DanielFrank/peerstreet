@@ -12,6 +12,7 @@ class DataStoreTest(unittest.TestCase):
         cls.existingDoc = "test"
         cls.nonExistingDoc = "test2"
         cls.ds = DataStore.get_data_store()
+        cls.ds.clear()
         cls.ds.create("test")
     
     def test_set_and_get(self):

@@ -34,3 +34,7 @@ class DataStore:
     
     def save(self):
         self.db.dump()
+        
+    def clear(self):
+        self.db.deldb()
+        

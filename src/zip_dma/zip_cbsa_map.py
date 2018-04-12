@@ -28,11 +28,14 @@ class ZipCbsaMap:
             return ZipCbsaMap.NO_RESULT
         return answer
     
+    def set(self, zipcode, cbsa):
+        self.data_store.set(ZipCbsaMap.DOC_NAME, zipcode, cbsa)
+    
     #Loads zip_dict
     def load_line(self, zip_dict):
         zipcode = zip_dict[ZipCbsaMap.ZIP_COLUMN]
         cbsa = zip_dict[ZipCbsaMap.CBSA_COLUMN]
-        self.data_store.set(ZipCbsaMap.DOC_NAME, zipcode, cbsa)
+        self.set(zipcode, cbsa)
      
     #Loads file that's been parsed by csv.DictReader
     #Assumes overwriting existing data
