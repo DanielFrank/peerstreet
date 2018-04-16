@@ -15,23 +15,27 @@ class CbsaLoader:
     
     #Assumes getting csv.DictReader iter
     @classmethod
-    def load_file(cls, csv):
+    def load_file(cls, csv, overwrite=False):
         cls.msa_map = MsaMap.get_map()
         cls.cbsa_msa_map = CbsaMsaIdMap.get_map()
         for row in csv:
-            cls.load_row(row)
+            cls.load_row(row, overwrite)
     
     @classmethod
-    def load_row(cls, row):
+    def load_row(cls, row, overwrite):
         if row[cls.LSAD_COLUMN] == cls.METRO_VALUE:
-            cls.load_msa(row)
+            cls.load_msa(row, overwrite)
             return
         if row[cls.MDIV_COLUMN] != "":
             cls.load_cbsa_msa_map(row)
     
     @classmethod
-    def load_msa(cls, row):
-        msa = MSA(row[cls.NAME_COLUMN])
+    def load_msa(cls, row, overwrite):
+        msa = None
+        if (not overwrite):
+            msa = cls.msa_map.get(row[cls.CBSA_COLUMN])
+        if msa is None:
+            msa = MSA(row[cls.NAME_COLUMN])
         cls.load_msa_pop(msa, row)
         cls.msa_map.store(row[cls.CBSA_COLUMN], msa)
         cls.cbsa_msa_map.set(row[cls.CBSA_COLUMN], row[cls.CBSA_COLUMN])

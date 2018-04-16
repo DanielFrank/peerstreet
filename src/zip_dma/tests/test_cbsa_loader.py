@@ -26,6 +26,12 @@ class CbsaLoaderTest(unittest.TestCase):
 10180,,48059,"Callahan County, TX",County or equivalent,13544,13544,13518,13535,13519,13528,13520,13557,-26,17,-16,9,-8,37,31,120,122,136,124,127,59,158,142,176,173,172,-28,-38,-20,-40,-49,-45,0,5,4,7,7,8,4,39,2,45,45,87,4,44,6,52,52,95,-2,11,-2,-3,-11,-13
 31080,11244,,"Anaheim-Santa Ana-Irvine, CA",Metropolitan Division,3010232,3010266,3017866,3056084,3089343,3120180,3144961,3169776,7600,38218,33259,30837,24781,24815,9304,38238,37842,37621,37706,37776,4316,17679,17819,18757,19383,19480,4988,20559,20023,18864,18323,18296,2348,12271,11605,12958,14981,15061,329,6052,1900,-1527,-7439,-10049,2677,18323,13505,11431,7542,5012,-65,-664,-269,542,-1084,1507
 """
+        cls.fileContents1 = """CBSA,MDIV,NAME,LSAD,POPESTIMATE2016
+10180,,"Abilene, TX",Metropolitan Statistical Area,11000
+"""
+        cls.fileContents2 = """CBSA,MDIV,NAME,LSAD,POPESTIMATE2017
+10180,,"Abilene, TX",Metropolitan Statistical Area,12000
+"""
 
     def parse_string_as_csv(self, s):
         return csv.DictReader(io.StringIO(s))
@@ -43,3 +49,23 @@ class CbsaLoaderTest(unittest.TestCase):
         self.assertEqual(CbsaLoaderTest.cbsa_msa_map.get("35620"), "35620")
         self.assertEqual(CbsaLoaderTest.cbsa_msa_map.get("11244"), "31080")
         self.assertIsNone(CbsaLoaderTest.cbsa_msa_map.get("99999"))
+
+    def test_set_with_different_pop_years(self):
+        """Test storing already existing data but with different populations"""
+        CbsaLoader.load_file(self.parse_string_as_csv(CbsaLoaderTest.fileContents1))
+        CbsaLoader.load_file(self.parse_string_as_csv(CbsaLoaderTest.fileContents2))
+        msa = CbsaLoaderTest.msa_map.get("10180")
+        self.assertIsNotNone(msa)
+        if msa is not None:
+            self.assertEqual(msa.get_population(2016), 11000)
+            self.assertEqual(msa.get_population(2017), 12000)
+
+    def test_set_overwrite(self):
+        """Confirm overwrite overwrites"""
+        CbsaLoader.load_file(self.parse_string_as_csv(CbsaLoaderTest.fileContents1), True)
+        CbsaLoader.load_file(self.parse_string_as_csv(CbsaLoaderTest.fileContents2), True)
+        msa = CbsaLoaderTest.msa_map.get("10180")
+        self.assertIsNotNone(msa)
+        if msa is not None:
+            self.assertEqual(msa.get_population(2016), 0)
+            self.assertEqual(msa.get_population(2017), 12000)
