@@ -6,14 +6,17 @@ class DataStoreTest(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
-        fileLocation = '/tmp/pickle.json'
-        if os.path.isfile(fileLocation):
-            os.remove(fileLocation)
+        cls.file_location = '/tmp/DataStoreTest.json'
         cls.existingDoc = "test"
         cls.nonExistingDoc = "test2"
-        cls.ds = DataStore.get_data_store()
-        cls.ds.clear()
+        cls.ds = DataStore.get_data_store(cls.file_location)
         cls.ds.create("test")
+
+    @classmethod
+    def tearDownClass(cls):
+        DataStore.test_clear_instance()
+        if os.path.isfile(cls.file_location):
+            os.remove(cls.file_location)
     
     def test_set_and_get(self):
         """Test setting a key and getting the value"""

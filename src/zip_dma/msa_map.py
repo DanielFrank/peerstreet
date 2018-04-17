@@ -15,6 +15,11 @@ class MsaMap:
     
     def __init__(self):
         self.data_store = DataStore.get_data_store()
+ 
+    @classmethod
+    #Run for tests only
+    def test_clear_instance(cls):
+        cls.__instance = None
         
     def __check_doc(self):
         if (not self.data_store.doc_exists(MsaMap.DOC_NAME)):

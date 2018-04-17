@@ -1,18 +1,30 @@
 import unittest
 import csv
 import io
+import os
 from itertools import islice
+from ..data_store import DataStore
 from ..zip_cbsa_map import ZipCbsaMap
 
 class ZipCbsaMapTest(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
+        cls.file_location = '/tmp/ZipCbsaMapTest.json'
+        temp = DataStore.get_data_store(cls.file_location)
         cls.zip_map = ZipCbsaMap.get_map()
         cls.fileContents = """ZIP,CBSA,RES_RATIO,BUS_RATIO,OTH_RATIO,TOT_RATIO
 00501,35004,0.000000000,1.000000000,0.000000000,1.000000000
 00601,00260,1.000000000,1.000000000,1.000000000,1.000000000
 """
+
+    @classmethod
+    def tearDownClass(cls):
+        ZipCbsaMap.test_clear_instance()
+        DataStore.test_clear_instance()
+        if os.path.isfile(cls.file_location):
+            os.remove(cls.file_location)        
+
     def parse_string_as_csv(self, s):
         return csv.DictReader(io.StringIO(s))
     

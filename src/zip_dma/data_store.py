@@ -3,13 +3,20 @@ import pickledb
 class DataStore:
     
     __instance = None
-    __fileLocation = '/tmp/pickle.json'
+    __defaultfileLocation = '/tmp/pickle.json'
     
     @classmethod
-    def get_data_store(cls):
+    def get_data_store(cls, file_location=""):
+        if file_location=="":
+            file_location = cls.__defaultfileLocation
         if cls.__instance is None:
-            cls.__instance = DataStore(cls.__fileLocation)
+            cls.__instance = DataStore(file_location)
         return cls.__instance
+
+    @classmethod
+    #Run for tests only
+    def test_clear_instance(cls):
+        cls.__instance = None
     
     def __init__(self, file_location):
         self.db = pickledb.load(file_location, False)

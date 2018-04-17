@@ -1,6 +1,8 @@
 import unittest
 import csv
 import io
+import os
+from ..data_store import DataStore
 from ..cbsa_loader import CbsaLoader
 from ..cbsa_msa_id_map import CbsaMsaIdMap
 from ..msa_map import MsaMap
@@ -9,6 +11,8 @@ class CbsaLoaderTest(unittest.TestCase):
     
     @classmethod
     def setUpClass(cls):
+        cls.file_location ="/tmp/CbsaLoaderTest.json"
+        temp = DataStore.get_data_store(cls.file_location)
         cls.msa_map = MsaMap.get_map()
         cls.cbsa_msa_map = CbsaMsaIdMap.get_map()
         cls.fileContents = """CBSA,MDIV,STCOU,NAME,LSAD,CENSUS2010POP,ESTIMATESBASE2010,POPESTIMATE2010,POPESTIMATE2011,POPESTIMATE2012,POPESTIMATE2013,POPESTIMATE2014,POPESTIMATE2015,NPOPCHG2010,NPOPCHG2011,NPOPCHG2012,NPOPCHG2013,NPOPCHG2014,NPOPCHG2015,BIRTHS2010,BIRTHS2011,BIRTHS2012,BIRTHS2013,BIRTHS2014,BIRTHS2015,DEATHS2010,DEATHS2011,DEATHS2012,DEATHS2013,DEATHS2014,DEATHS2015,NATURALINC2010,NATURALINC2011,NATURALINC2012,NATURALINC2013,NATURALINC2014,NATURALINC2015,INTERNATIONALMIG2010,INTERNATIONALMIG2011,INTERNATIONALMIG2012,INTERNATIONALMIG2013,INTERNATIONALMIG2014,INTERNATIONALMIG2015,DOMESTICMIG2010,DOMESTICMIG2011,DOMESTICMIG2012,DOMESTICMIG2013,DOMESTICMIG2014,DOMESTICMIG2015,NETMIG2010,NETMIG2011,NETMIG2012,NETMIG2013,NETMIG2014,NETMIG2015,RESIDUAL2010,RESIDUAL2011,RESIDUAL2012,RESIDUAL2013,RESIDUAL2014,RESIDUAL2015
@@ -32,6 +36,14 @@ class CbsaLoaderTest(unittest.TestCase):
         cls.fileContents2 = """CBSA,MDIV,NAME,LSAD,POPESTIMATE2017
 10180,,"Abilene, TX",Metropolitan Statistical Area,12000
 """
+
+    @classmethod
+    def tearDownClass(cls):
+        MsaMap.test_clear_instance()
+        CbsaMsaIdMap.test_clear_instance()
+        DataStore.test_clear_instance()
+        if os.path.isfile(cls.file_location):
+            os.remove(cls.file_location)
 
     def parse_string_as_csv(self, s):
         return csv.DictReader(io.StringIO(s))

@@ -14,6 +14,11 @@ class CbsaMsaIdMap:
         cls.__instance.__check_doc()
         return cls.__instance
     
+    @classmethod
+    #Run for tests only
+    def test_clear_instance(cls):
+        cls.__instance = None
+        
     def __init__(self):
         self.data_store = DataStore.get_data_store()
         
