@@ -3,8 +3,8 @@ import csv
 import io
 import os
 from itertools import islice
-from ..data_store import DataStore
-from ..zip_cbsa_map import ZipCbsaMap
+from zip_dma.data_store import DataStore
+from zip_dma.model.map.zip_cbsa_map import ZipCbsaMap
 
 class ZipCbsaMapTest(unittest.TestCase):
     

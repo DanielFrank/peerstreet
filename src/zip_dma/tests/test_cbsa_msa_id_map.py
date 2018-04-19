@@ -1,8 +1,8 @@
 import unittest
 import os
 from itertools import islice
-from ..data_store import DataStore
-from ..cbsa_msa_id_map import CbsaMsaIdMap
+from zip_dma.data_store import DataStore
+from zip_dma.model.map.cbsa_msa_id_map import CbsaMsaIdMap
 
 class CbsaMsaIdMapTest(unittest.TestCase):
     

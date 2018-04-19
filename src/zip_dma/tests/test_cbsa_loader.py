@@ -2,10 +2,10 @@ import unittest
 import csv
 import io
 import os
-from ..data_store import DataStore
-from ..cbsa_loader import CbsaLoader
-from ..cbsa_msa_id_map import CbsaMsaIdMap
-from ..msa_map import MsaMap
+from zip_dma.data_store import DataStore
+from zip_dma.cbsa_loader import CbsaLoader
+from zip_dma.model.map.cbsa_msa_id_map import CbsaMsaIdMap
+from zip_dma.model.map.msa_map import MsaMap
 
 class CbsaLoaderTest(unittest.TestCase):
     

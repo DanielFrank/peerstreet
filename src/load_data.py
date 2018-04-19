@@ -1,6 +1,6 @@
 import csv
 from zip_dma.data_store import DataStore
-from zip_dma.zip_cbsa_map import ZipCbsaMap
+from zip_dma.model.map.zip_cbsa_map import ZipCbsaMap
 from zip_dma.cbsa_loader import CbsaLoader
 
 zip_cbsa_map = ZipCbsaMap.get_map()

@@ -1,6 +1,6 @@
 import unittest
 import os
-from ..data_store import DataStore
+from zip_dma.data_store import DataStore
 
 class DataStoreTest(unittest.TestCase):
     
