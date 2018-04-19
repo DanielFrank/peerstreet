@@ -55,8 +55,8 @@ class CbsaLoaderTest(unittest.TestCase):
         self.assertIsNotNone(msa)
         if msa is not None:
             self.assertEqual(msa.msa_name, "New York-Newark-Jersey City, NY-NJ-PA")
-            self.assertEqual(msa.get_population(2014), 20095119)
-            self.assertEqual(msa.get_population(2015), 20182305)
+            self.assertEqual(msa.get_population("2014"), 20095119)
+            self.assertEqual(msa.get_population("2015"), 20182305)
         self.assertEqual(CbsaLoaderTest.cbsa_msa_map.get("20524"), "35620")
         self.assertEqual(CbsaLoaderTest.cbsa_msa_map.get("35620"), "35620")
         self.assertEqual(CbsaLoaderTest.cbsa_msa_map.get("11244"), "31080")
@@ -69,8 +69,8 @@ class CbsaLoaderTest(unittest.TestCase):
         msa = CbsaLoaderTest.msa_map.get("10180")
         self.assertIsNotNone(msa)
         if msa is not None:
-            self.assertEqual(msa.get_population(2016), 11000)
-            self.assertEqual(msa.get_population(2017), 12000)
+            self.assertEqual(msa.get_population("2016"), 11000)
+            self.assertEqual(msa.get_population("2017"), 12000)
 
     def test_set_overwrite(self):
         """Confirm overwrite overwrites"""
@@ -79,5 +79,5 @@ class CbsaLoaderTest(unittest.TestCase):
         msa = CbsaLoaderTest.msa_map.get("10180")
         self.assertIsNotNone(msa)
         if msa is not None:
-            self.assertEqual(msa.get_population(2016), 0)
-            self.assertEqual(msa.get_population(2017), 12000)
+            self.assertEqual(msa.get_population("2016"), 0)
+            self.assertEqual(msa.get_population("2017"), 12000)

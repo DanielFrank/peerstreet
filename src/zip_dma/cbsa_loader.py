@@ -49,8 +49,8 @@ class CbsaLoader:
             match = re.search(cls.POPULATION_REGEX, col)
             if match is None:
                 continue
-            yr = int(match.group(1))
-            if yr < cls.POPULATION_YEAR_MIN:
+            yr = match.group(1)
+            if int(yr) < cls.POPULATION_YEAR_MIN:
                 continue
             msa.set_population(yr, int(row[col]))
  
