@@ -1,5 +1,6 @@
 import re
-from zip_dma.msa import MSA
+from zip_dma.data_store import DataStore
+from zip_dma.model.msa import MSA
 from zip_dma.msa_map import MsaMap
 from zip_dma.cbsa_msa_id_map import CbsaMsaIdMap
 
@@ -16,10 +17,12 @@ class CbsaLoader:
     #Assumes getting csv.DictReader iter
     @classmethod
     def load_file(cls, csv, overwrite=False):
+        ds = DataStore.get_data_store()
         cls.msa_map = MsaMap.get_map()
         cls.cbsa_msa_map = CbsaMsaIdMap.get_map()
         for row in csv:
             cls.load_row(row, overwrite)
+        ds.save()
     
     @classmethod
     def load_row(cls, row, overwrite):

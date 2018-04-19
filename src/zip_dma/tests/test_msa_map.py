@@ -1,7 +1,7 @@
 import unittest
 import os
 from ..data_store import DataStore
-from ..msa import MSA
+from zip_dma.model.msa import MSA
 from ..msa_map import MsaMap
 
 class MsaMapTest(unittest.TestCase):

@@ -1,5 +1,5 @@
 from zip_dma.data_store import DataStore
-from zip_dma.msa import MSA
+from zip_dma.model.msa import MSA
 
 class MsaMap:
     
