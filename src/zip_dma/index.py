@@ -12,11 +12,11 @@ msa_map = MsaMap.get_map()
 zip_cbsa_map = ZipCbsaMap.get_map()
 ZIP_REGEX = "^\d{5}$"
 
-@app.route("/zipToDMA/<zip>")
-def zip_to_dma(zip):
+@app.route("/zipToDMA/<zip_code>")
+def zip_to_dma(zip_code):
     result = empty_result()
-    result["Zip"] = zip
-    cbsa = zip_cbsa_map.get(zip)
+    result["Zip"] = zip_code
+    cbsa = zip_cbsa_map.get(zip_code)
     if cbsa == "99999":
         return return_result(result)
     result["CBSA"] = cbsa
