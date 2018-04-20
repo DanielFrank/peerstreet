@@ -22,6 +22,12 @@ class ApiTest(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         return json.loads(response.data.decode())
     
+    def test_invalid_zip(self):
+        """Confirm error if invalid zip"""
+        data = self.make_call("12121212")
+        self.assertTrue("error" in data)
+    
+    
     def test_cbsa_not_msa_cbsa(self):
         """Test zip where cbsa is not the MSA's CBSA"""
         self.zip_test("90266","31084","Los Angeles-Long Beach-Anaheim, CA", 13254397, 13340068)

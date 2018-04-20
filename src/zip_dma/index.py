@@ -15,6 +15,8 @@ ZIP_REGEX = "^\d{5}$"
 @app.route("/zipToDMA/<zip_code>")
 def zip_to_dma(zip_code):
     result = empty_result()
+    if not check(zip_code):
+        return error_message("Zip code must be 5 digits")
     result["Zip"] = zip_code
     cbsa = zip_cbsa_map.get(zip_code)
     if cbsa == "99999":
@@ -31,6 +33,9 @@ def zip_to_dma(zip_code):
     result["Pop2015"] = msa.get_population("2015")
     return return_result(result)
 
+def check(zip_code):
+    match = re.search(ZIP_REGEX, zip_code)
+    return match is not None
 
 def return_result(result):
     return jsonify(result)
