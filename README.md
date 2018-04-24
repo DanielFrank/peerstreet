@@ -2,7 +2,7 @@
 
 ##Intro
  
-The following is the solution to the PeerStreet Coding Challenge. See [Original Problem Statement](#original-problem-specification) for the initial problem.
+The following is the solution to the PeerStreet Coding Challenge. See [Original Problem Statement](#original-problem-statement) for the initial problem.
 
 ## Tech
 
