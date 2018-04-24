@@ -16,9 +16,15 @@ Classes are set up for msas and stores for zip-to-CBSA, CBSA-to-MSA-id, and MSA.
 
 For loading, the stores uses Python's CSVDictReader which converts a CSV file into an interable of dictionaries.
 
+### Possible Improvements
+Check for data quality. Configure data store type.
+
 ## API
 
-Call receives zip and does a regex to confirm it's a 5-digit number. Returns JSON with 'error' if not. Otherwise returns JSON with zip, CBSA, MSA and populations for 2014 and 2015. (Using 2014 and 2015 are currently hardcoded; ideally we'd configure which years to return.). Returns 99999 for CBSA if no CBSA and N/A for other values if non-applicable.
+Call receives zip and does a regex to confirm it's a 5-digit number. Returns JSON with 'error' if not. Otherwise returns JSON with zip, CBSA, MSA and populations for 2014 and 2015. Returns 99999 for CBSA if no CBSA and N/A for other values if non-applicable.
+
+### Possible Improvements
+Configure what years are being returned.
 
 ## Client
 
